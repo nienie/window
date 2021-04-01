@@ -12,7 +12,7 @@ type WindowsTestSuite struct {
 
 func (o *WindowsTestSuite) TestAll() {
 	var (
-		w *TimeWindow
+		w     *TimeWindow
 		added bool
 	)
 	windows := NewWindows()
@@ -48,9 +48,9 @@ func (o *WindowsTestSuite) TestAll() {
 	//从小到大 pop
 	w = windows.PopFront()
 	o.Require().Equal(w1, w)
-	w= windows.PopFront()
+	w = windows.PopFront()
 	o.Require().Equal(w3, w)
-	w= windows.PopFront()
+	w = windows.PopFront()
 	o.Require().Equal(w2, w)
 }
 
