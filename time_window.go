@@ -15,6 +15,7 @@ type TimeWindow struct {
 	start   time.Duration //窗口开始时间戳
 	end     time.Duration //窗口结束时间戳
 	precise time.Duration //窗口精度,ms
+	name    string
 }
 
 //NewTimeWindow ...
@@ -24,13 +25,14 @@ func NewTimeWindow(prefix string, start, end time.Duration) *TimeWindow {
 		start:   start,
 		end:     end,
 		precise: time.Millisecond,
+		name:    fmt.Sprintf(windowNameFormat, prefix, start/time.Millisecond, end/time.Millisecond),
 	}
 }
 
 //String ...
 func (o TimeWindow) String() string {
-	return fmt.Sprintf(`TimeWindow={"name":"%s"","start":%d,"end":%d,"size":"%s","precise":"%s"}`,
-		o.prefix, o.start, o.end, o.GetWindowSize(), o.precise)
+	return fmt.Sprintf(`TimeWindow={"name":"%s", prefix":"%s"","start":%d,"end":%d,"size":"%s","precise":"%s"}`,
+		o.GetName(), o.prefix, o.start, o.end, o.GetWindowSize(), o.precise)
 }
 
 //GetStart 窗口开始时间戳，包括这个时间
@@ -50,7 +52,8 @@ func (o *TimeWindow) GetPrecise() time.Duration {
 
 //GetName ...
 func (o *TimeWindow) GetName() string {
-	return fmt.Sprintf(windowNameFormat, o.prefix, o.start/o.precise, o.end/o.precise)
+	return o.name
+	//return fmt.Sprintf(windowNameFormat, o.prefix, o.start/o.precise, o.end/o.precise)
 }
 
 //GetWindowSize 窗口的大小
